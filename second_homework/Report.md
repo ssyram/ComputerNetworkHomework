@@ -4,6 +4,10 @@
 ## `Telnet` for SMTP
 ![telnet_for_smtp](telnet_smtp.jpeg)
 
+Result:
+
+![result](result.png)
+
 ## Chapter 2
 ### P1
 F T F F F
