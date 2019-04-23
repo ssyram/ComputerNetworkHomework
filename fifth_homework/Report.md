@@ -259,7 +259,7 @@ void simple_Dijkstra_process_output(Point *f, std::ostream &os = cout) {
         print_contemporary();
         if (path.size() >= points.size() + 1) break;
         auto info = get_min();
-        offset += info.first;
+        offset = info.first;
         f = info.second;
     }
 }
@@ -308,61 +308,61 @@ According to codes in P3.
 |--|--|--|--|--|--|--|--|
 |0|t|2, t|$\infty$|7, t|$\infty$|4, t|$\infty$|
 |1|tu| |$\infty$|7, t|5, u|4, t|$\infty$|
-|2|tuv| |$\infty$|7, t|5, u| |9, v|
-|3|tuvw| |$\infty$|7, t| | |9, v|
-|4|tuvwy| |30, y| | | |9, v|
-|5|tuvwyx| |30, y| | | | |
+|2|tuv| |$\infty$|7, t|5, u| |7, v|
+|3|tuvw| |$\infty$|7, t| | |7, v|
+|4|tuvwy| |19, y| | | |7, v|
+|5|tuvwyx| |15, x| | | | |
 |6|tuvwyxz| | | | | | |
 ### b.
 |step|N'|D(t), p(t)|D(v), p(v)|D(z), p(z)|D(x), p(x)|D(w), p(w)|D(y), p(y)|
 |--|--|--|--|--|--|--|--|
 |0|u|2, u|3, u|$\infty$|$\infty$|3, u|$\infty$|
 |1|ut| |3, u|$\infty$|$\infty$|3, u|9, t|
-|2|utv| | |$\infty$|8, v|3, u|9, t|
-|3|utvw| | |$\infty$|8, v| |9, t|
-|4|utvwx| | |24, x| | |9, t|
-|5|utvwxy| | |24, x| | | |
+|2|utv| | |$\infty$|6, v|3, u|9, t|
+|3|utvw| | |$\infty$|6, v| |9, t|
+|4|utvwx| | |14, x| | |9, t|
+|5|utvwxy| | |14, x| | | |
 |6|utvwxyz| | | | | | |
 ### c.
 |step|N'|D(u), p(u)|D(t), p(t)|D(w), p(w)|D(y), p(y)|D(x), p(x)|D(z), p(z)|
 |--|--|--|--|--|--|--|--|
 |0|v|3, v|4, v|4, v|8, v|3, v|$\infty$|
 |1|vu| |4, v|4, v|8, v|3, v|$\infty$|
-|2|vux| |4, v|4, v|8, v| |14, x|
-|3|vuxt| | |4, v|8, v| |14, x|
-|4|vuxtw| | | |8, v| |14, x|
-|5|vuxtwy| | | | | |14, x|
+|2|vux| |4, v|4, v|8, v| |11, x|
+|3|vuxt| | |4, v|8, v| |11, x|
+|4|vuxtw| | | |8, v| |11, x|
+|5|vuxtwy| | | | | |11, x|
 |6|vuxtwyz| | | | | | |
 ### d.
 |step|N'|D(t), p(t)|D(u), p(u)|D(v), p(v)|D(z), p(z)|D(y), p(y)|D(x), p(x)|
 |--|--|--|--|--|--|--|--|
 |0|w|$\infty$|3, w|4, w|$\infty$|$\infty$|6, w|
 |1|wu|5, u| |4, w|$\infty$|$\infty$|6, w|
-|2|wuv|5, u| | |$\infty$|15, v|6, w|
-|3|wuvt| | | |$\infty$|15, v|6, w|
-|4|wuvtx| | | |26, x|15, v| |
-|5|wuvtxy| | | |26, x| | |
+|2|wuv|5, u| | |$\infty$|12, v|6, w|
+|3|wuvt| | | |$\infty$|12, v|6, w|
+|4|wuvtx| | | |14, x|12, v| |
+|5|wuvtxy| | | |14, x| | |
 |6|wuvtxyz| | | | | | |
 ### e.
 |step|N'|D(t), p(t)|D(u), p(u)|D(w), p(w)|D(x), p(x)|D(v), p(v)|D(z), p(z)|
 |--|--|--|--|--|--|--|--|
 |0|y|7, y|$\infty$|$\infty$|6, y|8, y|12, y|
 |1|yx|7, y|$\infty$|12, x| |8, y|12, y|
-|2|yxt| |15, t|12, x| |8, y|12, y|
-|3|yxtv| |15, t|12, x| | |12, y|
-|4|yxtvw| |15, t| | | |12, y|
-|5|yxtvwz| |15, t| | | | |
-|6|yxtvwzu| | | | | | |
+|2|yxt| |9, t|12, x| |8, y|12, y|
+|3|yxtv| |9, t|12, x| | |12, y|
+|4|yxtvu| | |12, x| | |12, y|
+|5|yxtvuw| | | | | |12, y|
+|6|yxtvuwz| | | | | | |
 ### f.
 |step|N'|D(t), p(t)|D(u), p(u)|D(x), p(x)|D(w), p(w)|D(y), p(y)|D(v), p(v)|
 |--|--|--|--|--|--|--|--|
 |0|z|$\infty$|$\infty$|8, z|$\infty$|12, z|$\infty$|
 |1|zx|$\infty$|$\infty$| |14, x|12, z|11, x|
-|2|zxv|23, v|22, v| |14, x|12, z| |
-|3|zxvy|23, v|22, v| |14, x| | |
-|4|zxvyw|23, v|22, v| | | | |
-|5|zxvywu|23, v| | | | | |
-|6|zxvywut| | | | | | |
+|2|zxv|15, v|14, v| |14, x|12, z| |
+|3|zxvy|15, v|14, v| |14, x| | |
+|4|zxvyu|15, v| | |14, x| | |
+|5|zxvyuw|15, v| | | | | |
+|6|zxvyuwt| | | | | | |
 
 ## P5
 ### Codes
