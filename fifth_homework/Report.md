@@ -285,6 +285,10 @@ void run() {
     simple_Dijkstra_process_output(&y);
     simple_Dijkstra_process_output(&z);
 }
+int main() {
+    run();
+    return 0;
+}
 ```
 ### Answer
 |step|N'|D(t), p(t)|D(u), p(u)|D(y), p(y)|D(w), p(w)|D(v), p(v)|D(z), p(z)|
@@ -411,7 +415,7 @@ void dfs(Point *s, ActTp &&act, OverPredicateTp &&op) {
     idfs(s);
 }
 
-unordered_map<Point *, size_t> cal_distanc_vector(Point *f) {
+unordered_map<Point *, size_t> cal_distance_vector(Point *f) {
     unordered_map<Point *, size_t> r;
     auto update = [&r](Point *p) -> void {
         size_t offset = r[p];
@@ -434,7 +438,7 @@ void run() {
     v.add_neighbours({&x, &z}, {3, 6});
     x.add_neighbours({&y, &z}, {3, 2});
     
-    auto &&r = cal_distanc_vector(&z);
+    auto &&r = cal_distance_vector(&z);
     cout << "|";
     for (auto &p: r)
         cout << p.first->name() << "|";
