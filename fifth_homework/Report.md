@@ -361,6 +361,100 @@ According to codes in P3.
 |6|zxvywut| | | | | | |
 
 ## P5
-|u|v|x|y|z|
+### Codes
+```c++
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <functional>
+using std::cout;
+using std::unordered_map;
+using std::unordered_set;
+
+class Point {
+    char _name;
+    unordered_map<Point *, size_t> _neighbours;
+    
+public:
+    Point(char name): _name(name) { }
+    
+    char name() const { return _name; }
+    const unordered_map<Point *, size_t> &neighbours() const { return _neighbours; }
+    
+    void add_neighbour(Point *p, size_t distance = -1) {
+        if (!p) return;
+        _neighbours.emplace(p, distance);
+        p->_neighbours.emplace(this, distance);
+    }
+    void add_neighbours(const vector<Point *> &ps) {
+        for (const auto &p: ps)
+            add_neighbour(p);
+    }
+    void add_neighbours(const vector<Point *> &ps, const vector<size_t> &distance) {
+        if (ps.size() != distance.size()) throw 1;
+        for (size_t i = 0; i < ps.size(); ++i)
+            add_neighbour(ps[i], distance[i]);
+    }
+};
+
+template <typename ActTp, typename OverPredicateTp>
+void dfs(Point *s, ActTp &&act, OverPredicateTp &&op) {
+    unordered_set<Point *> pset;
+    std::function<void (Point *)> idfs = [&pset, &act, &op, &idfs](Point *p) -> void {
+        if (op(p)) return;
+        pset.emplace(p);
+        act(p);
+        for (auto &pp: p->neighbours())
+            if (pset.find(pp.first) == pset.end())
+                idfs(pp.first);
+    };
+    idfs(s);
+}
+
+unordered_map<Point *, size_t> cal_distanc_vector(Point *f) {
+    unordered_map<Point *, size_t> r;
+    auto update = [&r](Point *p) -> void {
+        size_t offset = r[p];
+        for (auto &pp: p->neighbours()) {
+            auto it = r.find(pp.first);
+            if (it == r.end()) r.emplace(pp.first, pp.second + offset);
+            else if(it->second > offset + pp.second)
+                it->second = pp.second + offset;
+        }
+    };
+    r[f] = 0;
+    dfs(f, update, [](Point *){ return false; });
+    return r;
+}
+
+void run() {
+    Point t('t'), u('u'), v('v'), w('w'), x('x'), y('y'), z('z');
+    
+    u.add_neighbours({&v, &y}, {1, 2});
+    v.add_neighbours({&x, &z}, {3, 6});
+    x.add_neighbours({&y, &z}, {3, 2});
+    
+    auto &&r = cal_distanc_vector(&z);
+    cout << "|";
+    for (auto &p: r)
+        cout << p.first->name() << "|";
+    cout << std::endl;
+    cout << "|";
+    for (auto &p: r)
+        cout << "--|";
+    cout << std::endl;
+    cout << "|";
+    for (auto &p: r)
+        cout << p.second << "|";
+    cout << std::endl; 
+}
+
+int main() {
+    run();
+    return 0;
+}
+```
+### Answer
+|u|y|v|x|z|
 |--|--|--|--|--|
-|6|5|2|5|0|
+|6|5|5|2|0|
